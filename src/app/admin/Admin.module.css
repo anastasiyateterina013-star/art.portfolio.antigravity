@@ -1,0 +1,115 @@
+.adminPage {
+  background: var(--gray);
+  padding: var(--spacing-lg);
+  border-radius: 8px;
+}
+@media (prefers-color-scheme: light) {
+  .adminPage {
+    background: #f5f5f5;
+  }
+}
+
+.adminPage h1 {
+  margin-bottom: var(--spacing-lg);
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.tabBtn {
+  background: transparent;
+  border: none;
+  color: var(--foreground);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 8px 16px;
+  opacity: 0.6;
+}
+
+.tabBtn:hover {
+  opacity: 0.9;
+}
+
+.activeTab {
+  opacity: 1;
+  font-weight: bold;
+  border-bottom: 2px solid var(--foreground);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.formGroup input, .formGroup select, .formGroup textarea {
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 16px;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.submitBtn {
+  background: var(--foreground);
+  color: var(--background);
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.submitBtn:hover {
+  opacity: 0.8;
+}
+
+.projectList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.projectItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--gray);
+  border-radius: 4px;
+}
+
+@media (prefers-color-scheme: light) {
+  .projectItem {
+    background: #e0e0e0;
+  }
+}
+
+.deleteBtn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  opacity: 0.8;
+}

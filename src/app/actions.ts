@@ -1,0 +1,99 @@
+"use server";
+
+import { prisma } from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
+
+export async function loginAction(password: string) {
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "anastasiya2024";
+  if (password === ADMIN_PASSWORD) {
+    const cookieStore = await cookies();
+    cookieStore.set("admin_token", "true", { httpOnly: true, secure: process.env.NODE_ENV === "production", path: "/" });
+    return true;
+  }
+  return false;
+}
+
+export async function createProject(data: {
+  title: string;
+  category: string;
+  description?: string;
+  content?: string;
+  mainImage: string;
+  gallery?: string;
+}) {
+  await prisma.project.create({
+    data: {
+      title: data.title,
+      category: data.category,
+      description: data.description || "",
+      content: data.content || "",
+      mainImage: data.mainImage,
+      gallery: data.gallery || "[]",
+    },
+  });
+
+  revalidatePath("/design");
+  revalidatePath("/maal");
+  revalidatePath("/admin");
+}
+
+export async function deleteProject(id: string) {
+  await prisma.project.delete({
+    where: { id },
+  });
+
+  revalidatePath("/design");
+  revalidatePath("/maal");
+  revalidatePath("/admin");
+}
+
+export async function updateProject(id: string, data: {
+  title: string;
+  category: string;
+  description?: string;
+  content?: string;
+  mainImage?: string;
+  gallery?: string;
+}) {
+  const updateData: any = {
+    title: data.title,
+    category: data.category,
+    description: data.description || "",
+    content: data.content || "",
+  };
+  
+  if (data.mainImage) updateData.mainImage = data.mainImage;
+  if (data.gallery && data.gallery !== "[]") updateData.gallery = data.gallery;
+
+  await prisma.project.update({
+    where: { id },
+    data: updateData,
+  });
+
+  revalidatePath("/design");
+  revalidatePath("/maal");
+  revalidatePath("/admin");
+  revalidatePath(`/project/${id}`);
+}
+
+export async function updatePageContent(id: string, content: string, mainImage?: string, galleryString?: string) {
+  const updateData: any = { content };
+  if (mainImage) updateData.mainImage = mainImage;
+  if (galleryString !== undefined) updateData.gallery = galleryString;
+
+  await prisma.pageContent.upsert({
+    where: { id },
+    update: updateData,
+    create: {
+      id,
+      content,
+      mainImage: mainImage || null,
+      gallery: galleryString || "[]",
+    },
+  });
+
+  revalidatePath("/");
+  revalidatePath("/about");
+  revalidatePath("/admin");
+}
