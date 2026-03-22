@@ -34,5 +34,4 @@ yarn-error.log*
 next-env.d.ts
 
 # prisma dev database
-prisma/*.db
-prisma/*.db-journal
+# (Commented out so Vercel can clone your built database and images!)
