@@ -15,15 +15,18 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
 
   useEffect(() => {
     const page = pageContents?.find((p) => p.id === selectedPageId);
-    if (page && page.gallery) {
-      try {
-        setPageGalleryUrls(JSON.parse(page.gallery));
-      } catch {
+    const timeoutId = setTimeout(() => {
+      if (page && page.gallery) {
+        try {
+          setPageGalleryUrls(JSON.parse(page.gallery));
+        } catch {
+          setPageGalleryUrls([]);
+        }
+      } else {
         setPageGalleryUrls([]);
       }
-    } else {
-      setPageGalleryUrls([]);
-    }
+    }, 0);
+    return () => clearTimeout(timeoutId);
   }, [selectedPageId, pageContents]);
 
   const editingProject = projects.find((p) => p.id === editingProjectId);
