@@ -17,10 +17,8 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
     const page = pageContents?.find((p) => p.id === selectedPageId);
     if (page && page.gallery) {
       try {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPageGalleryUrls(JSON.parse(page.gallery));
       } catch {
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPageGalleryUrls([]);
       }
     } else {
@@ -76,7 +74,17 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         content: formData.get("content") as string,
         content_et: formData.get("content_et") as string,
         mainImage: mainImage || undefined,
-      } as Record<string, unknown>;
+      } as {
+        title: string;
+        title_et?: string;
+        category: string;
+        description?: string;
+        description_et?: string;
+        content?: string;
+        content_et?: string;
+        mainImage?: string;
+        gallery?: string;
+      };
 
       if (isEditing) {
         const existingGalleryUrlList = JSON.parse(editingProject?.gallery || "[]");
