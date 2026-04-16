@@ -13,9 +13,15 @@ export default async function AdminRoute() {
     createdAt: p.createdAt.toISOString()
   }));
 
+  const plainPageContents = pageContents.map(p => ({
+    ...p,
+    updatedAt: p.updatedAt.toISOString()
+  }));
+
   return (
     <div style={{ paddingTop: "var(--spacing-xl)" }}>
-      <AdminClient projects={plainProjects} pageContents={pageContents} />
+      <AdminClient projects={plainProjects} pageContents={plainPageContents} />
     </div>
   );
 }
+

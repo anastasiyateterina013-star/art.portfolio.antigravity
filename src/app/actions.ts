@@ -16,18 +16,24 @@ export async function loginAction(password: string) {
 
 export async function createProject(data: {
   title: string;
+  title_et?: string;
   category: string;
   description?: string;
+  description_et?: string;
   content?: string;
+  content_et?: string;
   mainImage: string;
   gallery?: string;
 }) {
   await prisma.project.create({
     data: {
       title: data.title,
+      title_et: data.title_et || null,
       category: data.category,
       description: data.description || "",
+      description_et: data.description_et || null,
       content: data.content || "",
+      content_et: data.content_et || null,
       mainImage: data.mainImage,
       gallery: data.gallery || "[]",
     },
@@ -50,17 +56,23 @@ export async function deleteProject(id: string) {
 
 export async function updateProject(id: string, data: {
   title: string;
+  title_et?: string;
   category: string;
   description?: string;
+  description_et?: string;
   content?: string;
+  content_et?: string;
   mainImage?: string;
   gallery?: string;
 }) {
   const updateData: any = {
     title: data.title,
+    title_et: data.title_et || null,
     category: data.category,
     description: data.description || "",
+    description_et: data.description_et || null,
     content: data.content || "",
+    content_et: data.content_et || null,
   };
   
   if (data.mainImage) updateData.mainImage = data.mainImage;

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
+import CursorFairyDust from "@/components/CursorFairyDust";
 
 const momo = localFont({
   src: "../fonts/MomoTrustSans-Regular.ttf",
@@ -26,6 +27,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${momo.variable} ${xcharter.variable}`}>
       <body>
+        <CursorFairyDust />
         <main className="container">
           <Header />
           {children}

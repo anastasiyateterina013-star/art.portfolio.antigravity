@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import styles from "./Project.module.css";
 import { Metadata, ResolvingMetadata } from "next";
+import { cookies } from "next/headers";
 
 type Props = {
   params: Promise<{ id: string }>
@@ -30,25 +31,42 @@ export default async function ProjectPage({ params }: Props) {
     notFound();
   }
 
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "en";
+
+  const displayTitle = lang === "et" && project.title_et ? project.title_et : project.title;
+  const displayDesc = lang === "et" && project.description_et ? project.description_et : project.description;
+  const displayContent = lang === "et" && project.content_et ? project.content_et : project.content;
+  
+  const t = {
+    back: lang === "et" ? "Tagasi" : "Back to",
+    design: lang === "et" ? "Disainitööde juurde" : "Design Works",
+    paintings: lang === "et" ? "Maalide juurde" : "Paintings"
+  };
+
+  if (!project) {
+    notFound();
+  }
+
   const galleryImages: string[] = JSON.parse(project.gallery || "[]");
 
   return (
     <article className={styles.projectPage}>
       <div className={styles.navigation}>
         <Link href={`/${project.category === "design" ? "design" : "maal"}`} className={styles.backLink}>
-          ← Back to {project.category === "design" ? "Design Works" : "Paintings"}
+          ← {t.back} {project.category === "design" ? t.design : t.paintings}
         </Link>
       </div>
 
       <div className={styles.content}>
         
         <div className={styles.detailsColumn}>
-          <h1 className={styles.title}>{project.title}</h1>
-          {project.description && <p className={styles.description}>{project.description}</p>}
+          <h1 className={styles.title}>{displayTitle}</h1>
+          {displayDesc && <p className={styles.description}>{displayDesc}</p>}
           
-          {project.content && (
+          {displayContent && (
             <div className={styles.longContent}>
-              {project.content.split('\n').map((paragraph, idx) => (
+              {displayContent.split('\n').map((paragraph: string, idx: number) => (
                 <p key={idx}>{paragraph}</p>
               ))}
             </div>
@@ -59,7 +77,7 @@ export default async function ProjectPage({ params }: Props) {
           <div className={styles.imageWrapper}>
             <Image
               src={project.mainImage}
-              alt={project.title}
+              alt={displayTitle}
               width={1600}
               height={1200}
               className={styles.image}

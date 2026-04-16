@@ -1,0 +1,37 @@
+.richText {
+  font-size: 18px;
+  line-height: 1.7;
+  max-width: 800px;
+  color: #111;
+  text-wrap: pretty; /* prevents orphan short words at line ends */
+}
+
+/* ## Section headings — blue, uppercase-spaced */
+.heading2 {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #0000FF;
+  margin-top: 2.5rem;
+  margin-bottom: 0.6rem;
+}
+
+/* ### Sub-headings — slightly smaller blue */
+.heading3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #0000FF;
+  margin-top: 1.8rem;
+  margin-bottom: 0.4rem;
+}
+
+.body {
+  margin: 0 0 0.6rem 0;
+}
+
+.spacer {
+  height: 0.8rem;
+}

@@ -67,9 +67,12 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
 
       const projectData = {
         title: formData.get("title") as string,
+        title_et: formData.get("title_et") as string,
         category: formData.get("category") as string,
         description: formData.get("description") as string,
+        description_et: formData.get("description_et") as string,
         content: formData.get("content") as string,
+        content_et: formData.get("content_et") as string,
         mainImage: mainImage || undefined,
       } as any;
 
@@ -185,9 +188,15 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
               )}
             </div>
 
-            <div className={styles.formGroup}>
-              <label>Project Title</label>
-              <input type="text" name="title" defaultValue={editingProject?.title} required />
+            <div style={{ display: "flex", gap: "15px" }}>
+              <div className={styles.formGroup} style={{ flex: 1 }}>
+                <label>Project Title (EN)</label>
+                <input type="text" name="title" defaultValue={editingProject?.title} required />
+              </div>
+              <div className={styles.formGroup} style={{ flex: 1 }}>
+                <label>Project Title (ET)</label>
+                <input type="text" name="title_et" defaultValue={editingProject?.title_et} />
+              </div>
             </div>
             
             <div className={styles.formGroup}>
@@ -208,14 +217,25 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
               <input type="file" name="galleryFiles" accept="image/*" multiple />
             </div>
             
-            <div className={styles.formGroup}>
-              <label>Short Description (Grid)</label>
-              <textarea name="description" rows={3} defaultValue={editingProject?.description}></textarea>
+            <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
+              <div className={styles.formGroup} style={{ flex: "1 1 calc(50% - 15px)", minWidth: "250px" }}>
+                <label>Short Description (Grid - EN)</label>
+                <textarea name="description" rows={3} defaultValue={editingProject?.description}></textarea>
+              </div>
+              <div className={styles.formGroup} style={{ flex: "1 1 calc(50% - 15px)", minWidth: "250px" }}>
+                <label>Short Description (Grid - ET)</label>
+                <textarea name="description_et" rows={3} defaultValue={editingProject?.description_et}></textarea>
+              </div>
             </div>
             
             <div className={styles.formGroup}>
-              <label>Full Content (Detail Page)</label>
-              <textarea name="content" rows={8} defaultValue={editingProject?.content}></textarea>
+              <label>Full Content (Detail Page - EN)</label>
+              <textarea name="content" rows={6} defaultValue={editingProject?.content}></textarea>
+            </div>
+
+            <div className={styles.formGroup}>
+              <label>Full Content (Detail Page - ET)</label>
+              <textarea name="content_et" rows={6} defaultValue={editingProject?.content_et}></textarea>
             </div>
             
             <button type="submit" disabled={loading} className={styles.submitBtn}>
@@ -230,9 +250,12 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
             <div className={styles.formGroup}>
               <label>Select Page</label>
               <select name="pageId" value={selectedPageId} onChange={(e) => setSelectedPageId(e.target.value)} required>
-                <option value="home">Home Page</option>
-                <option value="about">About Page</option>
-                <option value="contacts">Contacts</option>
+                <option value="home">Home Page (EN)</option>
+                <option value="home_et">Home Page (ET)</option>
+                <option value="about">About Page (EN)</option>
+                <option value="about_et">About Page (ET)</option>
+                <option value="contacts">Contacts (EN)</option>
+                <option value="contacts_et">Contacts (ET)</option>
               </select>
             </div>
             <div className={styles.formGroup}>
@@ -265,8 +288,18 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
             </div>
             
             <div className={styles.formGroup}>
-              <label>Page Text Content (Supports basic HTML like &lt;br&gt; or paragraphs)</label>
-              <textarea name="content" rows={10} defaultValue={selectedPageContent?.content}></textarea>
+              <label>
+                Page Text Content
+                <span style={{ display: "block", marginTop: "6px", padding: "8px 12px", background: "#f0f0f0", borderRadius: "6px", fontWeight: "normal", fontSize: "13px", lineHeight: "1.7", color: "#333", fontFamily: "monospace" }}>
+                  ✍️ <strong>Formatting Guide:</strong><br/>
+                  <code>## Section Heading</code> → BLUE UPPERCASE HEADING<br/>
+                  <code>### Smaller Heading</code> → smaller blue heading<br/>
+                  <code>**bold text**</code> → <strong>bold</strong><br/>
+                  <code>*italic text*</code> → <em>italic</em><br/>
+                  Blank line = paragraph break
+                </span>
+              </label>
+              <textarea name="content" rows={14} defaultValue={selectedPageContent?.content} style={{ fontFamily: "monospace", fontSize: "14px" }}></textarea>
             </div>
             <button type="submit" disabled={loading} className={styles.submitBtn}>
               {loading ? "Saving..." : "Update Page"}

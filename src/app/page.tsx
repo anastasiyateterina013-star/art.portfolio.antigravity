@@ -1,11 +1,25 @@
 import styles from "./Home.module.css";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
+import { cookies } from "next/headers";
 
 export default async function Home() {
-  const pageContent = await prisma.pageContent.findUnique({
-    where: { id: "home" },
+  const cookieStore = await cookies();
+  const lang = cookieStore.get("lang")?.value || "en";
+
+  let pageContent = await prisma.pageContent.findUnique({
+    where: { id: lang === "et" ? "home_et" : "home" },
   });
+  if (!pageContent && lang === "et") {
+    pageContent = await prisma.pageContent.findUnique({ where: { id: "home" } });
+  }
+
+  const t = {
+    software: lang === "et" ? "Tarkvara, millega töötan:" : "Software I work with:",
+    what_else: lang === "et" ? "Millega veel tegelen:" : "What else I do:",
+    skills: lang === "et" ? "Fotograafia, videotöötlus, sotsiaalmeedia haldus" : "Photography, video editing, social media management",
+    copyright: lang === "et" ? "Kõik õigused kaitstud." : "All rights reserved."
+  };
 
   const contentText = pageContent?.content ?? "I'm a graphic designer and a student of EKA, Tallinn.\nI'm passionate about creating relevant and useful design products.";
   const profileImage = pageContent?.mainImage;
@@ -28,7 +42,7 @@ export default async function Home() {
             )}
             
             <div className={styles.skills}>
-              <h2>Software I work with:</h2>
+              <h2>{t.software}</h2>
               <div className={styles.skillTags}>
                 <span>Figma</span>
                 <span>Photoshop</span>
@@ -37,8 +51,8 @@ export default async function Home() {
                 <span>Premiere Pro</span>
               </div>
               
-              <h2 style={{ marginTop: "var(--spacing-md)" }}>What else I do:</h2>
-              <p style={{ fontSize: "18px" }}>Photography, video editing, social media management</p>
+              <h2 style={{ marginTop: "var(--spacing-md)" }}>{t.what_else}</h2>
+              <p style={{ fontSize: "18px" }}>{t.skills}</p>
               
               <div className={styles.socials}>
                  <a href="#">Telegram</a>
@@ -68,7 +82,7 @@ export default async function Home() {
       )}
       
       <footer className={styles.footer}>
-        <p className={styles.copyright}>© 2026 All rights reserved. Anastasiya Teterina.</p>
+        <p className={styles.copyright}>© 2026 {t.copyright} Anastasiya Teterina.</p>
       </footer>
     </div>
   );

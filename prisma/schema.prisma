@@ -8,19 +8,22 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model Project {
-  id          String   @id @default(uuid())
-  title       String
-  description String
-  content     String   @default("")
-  mainImage   String
-  gallery     String   @default("[]")
-  category    String
-  createdAt   DateTime @default(now())
+  id             String   @id @default(uuid())
+  title          String
+  title_et       String?
+  description    String
+  description_et String?
+  content        String   @default("")
+  content_et     String?
+  mainImage      String
+  gallery        String   @default("[]")
+  category       String
+  createdAt      DateTime @default(now())
 }
 
 model PageContent {
