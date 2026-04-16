@@ -204,17 +204,17 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
             <div style={{ display: "flex", gap: "15px" }}>
               <div className={styles.formGroup} style={{ flex: 1 }}>
                 <label>Project Title (EN)</label>
-                <input type="text" name="title" defaultValue={editingProject?.title} required />
+                <input type="text" name="title" defaultValue={editingProject?.title || ""} required />
               </div>
               <div className={styles.formGroup} style={{ flex: 1 }}>
                 <label>Project Title (ET)</label>
-                <input type="text" name="title_et" defaultValue={editingProject?.title_et} />
+                <input type="text" name="title_et" defaultValue={editingProject?.title_et || ""} />
               </div>
             </div>
             
             <div className={styles.formGroup}>
               <label>Category</label>
-              <select name="category" defaultValue={editingProject?.category} required>
+              <select name="category" defaultValue={editingProject?.category || ""} required>
                 <option value="design">Design Works</option>
                 <option value="painting">Drawings & Paintings</option>
               </select>
@@ -233,22 +233,22 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
             <div style={{ display: "flex", gap: "15px", flexWrap: "wrap" }}>
               <div className={styles.formGroup} style={{ flex: "1 1 calc(50% - 15px)", minWidth: "250px" }}>
                 <label>Short Description (Grid - EN)</label>
-                <textarea name="description" rows={3} defaultValue={editingProject?.description}></textarea>
+                <textarea name="description" rows={3} defaultValue={editingProject?.description || ""}></textarea>
               </div>
               <div className={styles.formGroup} style={{ flex: "1 1 calc(50% - 15px)", minWidth: "250px" }}>
                 <label>Short Description (Grid - ET)</label>
-                <textarea name="description_et" rows={3} defaultValue={editingProject?.description_et}></textarea>
+                <textarea name="description_et" rows={3} defaultValue={editingProject?.description_et || ""}></textarea>
               </div>
             </div>
             
             <div className={styles.formGroup}>
               <label>Full Content (Detail Page - EN)</label>
-              <textarea name="content" rows={6} defaultValue={editingProject?.content}></textarea>
+              <textarea name="content" rows={6} defaultValue={editingProject?.content || ""}></textarea>
             </div>
 
             <div className={styles.formGroup}>
               <label>Full Content (Detail Page - ET)</label>
-              <textarea name="content_et" rows={6} defaultValue={editingProject?.content_et}></textarea>
+              <textarea name="content_et" rows={6} defaultValue={editingProject?.content_et || ""}></textarea>
             </div>
             
             <button type="submit" disabled={loading} className={styles.submitBtn}>
@@ -312,7 +312,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                   Blank line = paragraph break
                 </span>
               </label>
-              <textarea name="content" rows={14} defaultValue={selectedPageContent?.content} style={{ fontFamily: "monospace", fontSize: "14px" }}></textarea>
+              <textarea name="content" rows={14} defaultValue={selectedPageContent?.content || ""} style={{ fontFamily: "monospace", fontSize: "14px" }}></textarea>
             </div>
             <button type="submit" disabled={loading} className={styles.submitBtn}>
               {loading ? "Saving..." : "Update Page"}
