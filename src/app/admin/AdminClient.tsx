@@ -5,7 +5,7 @@ import { createProject, updateProject, deleteProject, updatePageContent } from "
 import styles from "./Admin.module.css";
 import Image from "next/image";
 
-export default function AdminClient({ projects = [], pageContents = [] }: { projects?: any[], pageContents?: any[] }) {
+export default function AdminClient({ projects = [], pageContents = [] }: { projects?: { id: string; title?: string; title_et?: string; category?: string; description?: string; description_et?: string; content?: string; content_et?: string; mainImage?: string; gallery?: string; }[], pageContents?: { id: string; content?: string; mainImage?: string; gallery?: string; }[] }) {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("projects");
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
@@ -17,8 +17,10 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
     const page = pageContents?.find((p) => p.id === selectedPageId);
     if (page && page.gallery) {
       try {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPageGalleryUrls(JSON.parse(page.gallery));
-      } catch (e) {
+      } catch {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setPageGalleryUrls([]);
       }
     } else {
@@ -74,7 +76,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         content: formData.get("content") as string,
         content_et: formData.get("content_et") as string,
         mainImage: mainImage || undefined,
-      } as any;
+      } as Record<string, unknown>;
 
       if (isEditing) {
         const existingGalleryUrlList = JSON.parse(editingProject?.gallery || "[]");

@@ -65,7 +65,7 @@ export async function updateProject(id: string, data: {
   mainImage?: string;
   gallery?: string;
 }) {
-  const updateData: any = {
+  const updateData: Record<string, string | null | undefined> = {
     title: data.title,
     title_et: data.title_et || null,
     category: data.category,
@@ -90,7 +90,7 @@ export async function updateProject(id: string, data: {
 }
 
 export async function updatePageContent(id: string, content: string, mainImage?: string, galleryString?: string) {
-  const updateData: any = { content };
+  const updateData: Record<string, string | null | undefined> = { content };
   if (mainImage) updateData.mainImage = mainImage;
   if (galleryString !== undefined) updateData.gallery = galleryString;
 

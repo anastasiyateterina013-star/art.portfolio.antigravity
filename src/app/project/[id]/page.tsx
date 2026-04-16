@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import styles from "./Project.module.css";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 import { cookies } from "next/headers";
 
 type Props = {
@@ -11,8 +11,7 @@ type Props = {
 }
 
 export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const resolvedParams = await params;
   const project = await prisma.project.findUnique({ where: { id: resolvedParams.id } });

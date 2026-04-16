@@ -1,11 +1,10 @@
-import type { PrismaClient } from "@prisma/client";
-const { PrismaClient: PrismaClientValue } = require("@prisma/client");
+import { PrismaClient } from "@prisma/client";
 
 const globalForPrisma = global as unknown as { prisma: PrismaClient };
 
 export const prisma =
   globalForPrisma.prisma ||
-  new PrismaClientValue({
+  new PrismaClient({
     log: ["query"],
   });
 

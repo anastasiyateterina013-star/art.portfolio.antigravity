@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable */
 import { useEffect } from "react";
 
 function fairyDustCursor(options?: any) {

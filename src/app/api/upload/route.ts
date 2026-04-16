@@ -25,8 +25,8 @@ export async function POST(request: Request) {
     await writeFile(filePath, buffer);
 
     return NextResponse.json({ success: true, url: `/uploads/${filename}` });
-  } catch (err: any) {
+  } catch (err: unknown) {
     console.error("Error uploading file:", err);
-    return NextResponse.json({ success: false, error: err.message });
+    return NextResponse.json({ success: false, error: (err as Error).message });
   }
 }

@@ -10,6 +10,7 @@ export default function LanguageToggle() {
   useEffect(() => {
     // Read the current cookie on mount
     const match = document.cookie.match(new RegExp("(^| )lang=([^;]+)"));
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (match) setLang(match[2]);
   }, []);
 
