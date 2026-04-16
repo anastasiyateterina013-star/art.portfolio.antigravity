@@ -35,3 +35,6 @@ next-env.d.ts
 
 # prisma dev database
 # (Commented out so Vercel can clone your built database and images!)
+
+.vercel
+.env*.local
