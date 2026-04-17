@@ -2,6 +2,7 @@ import styles from "./Home.module.css";
 import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { cookies } from "next/headers";
+import RichText from "@/components/RichText";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -15,15 +16,21 @@ export default async function Home() {
   }
 
   const t = {
-    software: lang === "et" ? "Tarkvara, millega töötan:" : "Software I work with:",
-    what_else: lang === "et" ? "Millega veel tegelen:" : "What else I do:",
-    skills: lang === "et" ? "Fotograafia, videotöötlus, sotsiaalmeedia haldus" : "Photography, video editing, social media management",
     copyright: lang === "et" ? "Kõik õigused kaitstud." : "All rights reserved."
   };
 
-  const contentText = pageContent?.content ?? "I'm a graphic designer and a student of EKA, Tallinn.\nI'm passionate about creating relevant and useful design products.";
+  const defaultContent = "I'm a graphic designer and a student of EKA, Tallinn.\nI'm passionate about creating relevant and useful design products.\n\n### Software I work with:\nIllustrator; InDesign; Figma; Photoshop\n\n### What else I do:\nPhotography, video editing, social media management";
+  const contentText = pageContent?.content ?? defaultContent;
   const profileImage = pageContent?.mainImage;
   const galleryImages: string[] = JSON.parse(pageContent?.gallery || "[]");
+
+  let heroText = contentText;
+  let restContent = "";
+  const splitIndex = contentText.indexOf('\n\n');
+  if (splitIndex !== -1) {
+    heroText = contentText.substring(0, splitIndex).trim();
+    restContent = contentText.substring(splitIndex).trim();
+  }
 
   return (
     <div className={styles.home}>
@@ -33,32 +40,24 @@ export default async function Home() {
           <div className={styles.contentSection}>
             <h1 className={styles.name}>Anastasiya Teterina</h1>
 
-            {contentText && (
+            {heroText && (
               <div className={styles.introText}>
-                {contentText.split('\n').map((line: string, i: number) => (
+                {heroText.split('\n').map((line: string, i: number) => (
                   <p key={i}>{line}</p>
                 ))}
               </div>
             )}
             
-            <div className={styles.skills}>
-              <h2>{t.software}</h2>
-              <div className={styles.skillTags}>
-                <span>Figma</span>
-                <span>Photoshop</span>
-                <span>Illustrator</span>
-                <span>InDesign</span>
-                <span>Premiere Pro</span>
+            {restContent && (
+              <div style={{ paddingTop: "var(--spacing-sm)" }}>
+                <RichText content={restContent} />
               </div>
+            )}
               
-              <h2 style={{ marginTop: "var(--spacing-md)" }}>{t.what_else}</h2>
-              <p style={{ fontSize: "18px" }}>{t.skills}</p>
-              
-              <div className={styles.socials}>
-                 <a href="#">Telegram</a>
-                 <a href="#">Instagram</a>
-                 <a href="#">Facebook</a>
-              </div>
+            <div className={styles.socials}>
+                <a href="#">Telegram</a>
+                <a href="#">Instagram</a>
+                <a href="#">Facebook</a>
             </div>
           </div>
 
