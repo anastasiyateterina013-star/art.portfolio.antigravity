@@ -131,9 +131,9 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
       }
 
       form.reset();
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      alert(err.message || "Error saving project");
+      alert(err instanceof Error ? err.message : "Error saving project");
     }
     setLoading(false);
   };
@@ -179,9 +179,9 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
 
       form.reset();
       alert("Page updated successfully!");
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
-      alert(err.message || "Error updating page");
+      alert(err instanceof Error ? err.message : "Error updating page");
     }
     setLoading(false);
   };
