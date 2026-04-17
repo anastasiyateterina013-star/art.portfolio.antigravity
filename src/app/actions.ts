@@ -76,7 +76,7 @@ export async function updateProject(id: string, data: {
   };
   
   if (data.mainImage) updateData.mainImage = data.mainImage;
-  if (data.gallery && data.gallery !== "[]") updateData.gallery = data.gallery;
+  if (data.gallery !== undefined) updateData.gallery = data.gallery;
 
   await prisma.project.update({
     where: { id },

@@ -80,7 +80,11 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
           const uploadData = new FormData();
           uploadData.append("file", file);
           const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-          const uploadJson = await uploadRes.json();
+          if (!uploadRes.ok) {
+            throw new Error("One of your gallery images is too large (Over 4.5MB Vercel limit). Please compress them!");
+          }
+          let uploadJson;
+          try { uploadJson = await uploadRes.json(); } catch { throw new Error("Gallery upload failed."); }
           if (uploadJson.url) galleryUrls.push(uploadJson.url);
         }
       }
@@ -127,9 +131,9 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
       }
 
       form.reset();
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Error saving project");
+      alert(err.message || "Error saving project");
     }
     setLoading(false);
   };
@@ -157,7 +161,9 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
           const uploadData = new FormData();
           uploadData.append("file", file);
           const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-          const uploadJson = await uploadRes.json();
+          if (!uploadRes.ok) throw new Error("Gallery image over 4.5MB limit. Please compress.");
+          let uploadJson;
+          try { uploadJson = await uploadRes.json(); } catch { throw new Error("Upload failed."); }
           if (uploadJson.url) newGalleryUrls.push(uploadJson.url);
         }
       }
@@ -173,9 +179,9 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
 
       form.reset();
       alert("Page updated successfully!");
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Error updating page");
+      alert(err.message || "Error updating page");
     }
     setLoading(false);
   };
