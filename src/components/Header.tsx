@@ -19,7 +19,7 @@ export default async function Header() {
     <header className="site-header">
       <div className="header-left">
         <Link href="/">{t.home}</Link>
-        <Link href="/about#contacts">{t.contacts}</Link>
+        <Link href="/contact">{t.contacts}</Link>
       </div>
       <div className="header-right">
         <Link href="/design">{t.design}</Link>
