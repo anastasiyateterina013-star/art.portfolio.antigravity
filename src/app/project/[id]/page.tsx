@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import styles from "./Project.module.css";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
+import RichText from "@/components/RichText";
 
 type Props = {
   params: Promise<{ id: string }>
@@ -65,9 +66,7 @@ export default async function ProjectPage({ params }: Props) {
           
           {displayContent && (
             <div className={styles.longContent}>
-              {displayContent.split('\n').map((paragraph: string, idx: number) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
+              <RichText content={displayContent} />
             </div>
           )}
         </div>

@@ -6,6 +6,8 @@
  *   ### Sub-heading      → smaller blue heading (h3)
  *   **bold text**        → bold inline text
  *   *italic text*        → italic inline text
+ *   [text](url)          → clickable link
+ *   https://...          → auto-link raw URLs
  *   Blank line           → paragraph break
  *   Any other line       → normal body text
  */
@@ -44,7 +46,7 @@ function noOrphans(text: string): string {
 function parseInline(text: string): React.ReactNode[] {
   const processed = noOrphans(text);
   const parts: React.ReactNode[] = [];
-  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*)/g;
+  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*|\[(.+?)\]\((.+?)\)|(https?:\/\/[^\s]+))/g;
   let lastIndex = 0;
   let match;
   let key = 0;
@@ -56,6 +58,10 @@ function parseInline(text: string): React.ReactNode[] {
       parts.push(<strong key={key++}>{match[2]}</strong>);
     } else if (match[3]) {
       parts.push(<em key={key++}>{match[3]}</em>);
+    } else if (match[4] && match[5]) {
+      parts.push(<a key={key++} href={match[5]} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'inherit' }}>{match[4]}</a>);
+    } else if (match[6]) {
+      parts.push(<a key={key++} href={match[6]} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'underline', color: 'inherit' }}>{match[6]}</a>);
     }
     lastIndex = match.index + match[0].length;
   }
