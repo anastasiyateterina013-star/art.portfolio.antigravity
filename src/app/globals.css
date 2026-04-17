@@ -4,6 +4,7 @@
   --accent: #ff0000;
   --gray: #e5e5e5;
   --border-color: #e5e5e5;
+  --heading-color: #0000FF;
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
@@ -18,6 +19,7 @@
     --foreground: #ffffff;
     --border-color: #333333;
     --gray: #333333;
+    --heading-color: #6da2ff;
   }
 }
 
