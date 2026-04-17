@@ -12,6 +12,20 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
   
   const [selectedPageId, setSelectedPageId] = useState("home");
   const [pageGalleryUrls, setPageGalleryUrls] = useState<string[]>([]);
+  const [projectGalleryUrls, setProjectGalleryUrls] = useState<string[]>([]);
+
+  useEffect(() => {
+    const project = projects.find((p) => p.id === editingProjectId);
+    if (project && project.gallery) {
+      try {
+        setProjectGalleryUrls(JSON.parse(project.gallery));
+      } catch {
+        setProjectGalleryUrls([]);
+      }
+    } else {
+      setProjectGalleryUrls([]);
+    }
+  }, [editingProjectId, projects]);
 
   useEffect(() => {
     const page = pageContents?.find((p) => p.id === selectedPageId);
@@ -90,11 +104,8 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
       };
 
       if (isEditing) {
-        const existingGalleryUrlList = JSON.parse(editingProject?.gallery || "[]");
-        const mergedGallery = [...existingGalleryUrlList, ...galleryUrls];
-        if (mergedGallery.length > 0) {
-          projectData.gallery = JSON.stringify(mergedGallery);
-        }
+        const mergedGallery = [...projectGalleryUrls, ...galleryUrls];
+        projectData.gallery = JSON.stringify(mergedGallery);
       } else {
         if (galleryUrls.length > 0) {
           projectData.gallery = JSON.stringify(galleryUrls);
@@ -170,6 +181,10 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
     setPageGalleryUrls(prev => prev.filter(url => url !== urlToRemove));
   };
 
+  const removeProjectGalleryImage = (urlToRemove: string) => {
+    setProjectGalleryUrls(prev => prev.filter(url => url !== urlToRemove));
+  };
+
   return (
     <div className={styles.adminPage} style={{ display: "flex", flexWrap: "wrap", gap: "40px" }}>
       <div style={{ flex: 2, minWidth: "300px" }}>
@@ -225,8 +240,27 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
               <input type="file" name="file" accept="image/*" required={!editingProjectId} />
             </div>
             
+            {editingProjectId && projectGalleryUrls.length > 0 && (
+              <div className={styles.formGroup}>
+                <label>Manage Existing Gallery (Click to remove)</label>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
+                  {projectGalleryUrls.map((url, i) => (
+                    <div key={i} style={{ position: "relative" }}>
+                      <Image src={url} alt={`Gallery ${i}`} width={80} height={80} style={{ objectFit: "cover", borderRadius: "4px" }} />
+                      <button 
+                        type="button" 
+                        onClick={() => removeProjectGalleryImage(url)}
+                        style={{ position: "absolute", top: -5, right: -5, background: "red", color: "white", border: "none", borderRadius: "50%", width: "24px", height: "24px", cursor: "pointer", fontSize: "12px" }}>
+                        X
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className={styles.formGroup}>
-              <label>Gallery Images (Optional - hold Ctrl/Cmd to select multiple) <br/> <small style={{color: 'green'}}>{editingProjectId && "(Uploading new images will add them to your existing gallery, it will not delete old ones)"}</small></label>
+              <label>Add New Gallery Images (Optional - hold Ctrl/Cmd to select multiple)</label>
               <input type="file" name="galleryFiles" accept="image/*" multiple />
             </div>
             
