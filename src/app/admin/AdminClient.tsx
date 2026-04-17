@@ -352,6 +352,8 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                   <code>### Smaller Heading</code> → smaller blue heading<br/>
                   <code>**bold text**</code> → <strong>bold</strong><br/>
                   <code>*italic text*</code> → <em>italic</em><br/>
+                  <code>[Click Here](https://example.com)</code> → <span style={{textDecoration: "underline", color: "blue"}}>Click Here</span><br/>
+                  <code>https://example.com</code> → Automatic Link<br/>
                   Blank line = paragraph break
                 </span>
               </label>
