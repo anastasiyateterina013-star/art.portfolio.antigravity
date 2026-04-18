@@ -255,7 +255,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
                   {projectGalleryUrls.map((url, i) => (
                     <div key={i} style={{ position: "relative" }}>
-                      <Image src={url} alt={`Gallery ${i}`} width={80} height={80} style={{ objectFit: "cover", borderRadius: "4px" }} />
+                      <Image src={url} alt={`Gallery ${i}`} width={80} height={80} style={{ objectFit: "cover", borderRadius: "4px" }} unoptimized={url.toLowerCase().endsWith('.gif')} />
                       <button 
                         type="button" 
                         onClick={() => removeProjectGalleryImage(url)}
@@ -325,7 +325,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                 <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "10px" }}>
                   {pageGalleryUrls.map((url, i) => (
                     <div key={i} style={{ position: "relative" }}>
-                      <Image src={url} alt={`Gallery ${i}`} width={80} height={80} style={{ objectFit: "cover", borderRadius: "4px" }} />
+                      <Image src={url} alt={`Gallery ${i}`} width={80} height={80} style={{ objectFit: "cover", borderRadius: "4px" }} unoptimized={url.toLowerCase().endsWith('.gif')} />
                       <button 
                         type="button" 
                         onClick={() => removePageGalleryImage(url)}

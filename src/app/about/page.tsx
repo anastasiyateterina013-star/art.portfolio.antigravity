@@ -44,6 +44,7 @@ export default async function AboutPage() {
               alt="About illustration"
               width={260}
               height={400}
+              unoptimized={sideImage.toLowerCase().endsWith('.gif')}
               style={{
                 width: "100%",
                 height: "auto",

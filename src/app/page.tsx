@@ -58,7 +58,7 @@ export default async function Home() {
           {profileImage && profileImage !== "/placeholder.jpg" && (
              <div className={styles.portraitColumn}>
                <div className={styles.portraitWrapper}>
-                 <Image src={profileImage} alt="Anastasiya Teterina" width={400} height={500} className={styles.portraitImage} priority />
+                 <Image src={profileImage} alt="Anastasiya Teterina" width={400} height={500} className={styles.portraitImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
                </div>
              </div>
           )}
@@ -69,7 +69,7 @@ export default async function Home() {
       {galleryImages.length > 0 && (
         <div className={styles.extraGallery}>
           {galleryImages.map((url, i) => (
-            <Image key={i} src={url} alt={`Home Gallery ${i}`} width={500} height={500} className={styles.extraImage} />
+            <Image key={i} src={url} alt={`Home Gallery ${i}`} width={500} height={500} className={styles.extraImage} unoptimized={url.toLowerCase().endsWith('.gif')} />
           ))}
         </div>
       )}

@@ -72,24 +72,26 @@ export default async function ProjectPage({ params }: Props) {
         </div>
 
         <div className={styles.mediaColumn}>
-          <div className={styles.imageWrapper}>
+          {project.mainImage && project.mainImage !== "/placeholder.jpg" && (
             <Image
               src={project.mainImage}
-              alt={displayTitle}
-              width={1600}
-              height={1200}
-              className={styles.image}
+              alt={project.title}
+              width={800}
+              height={600}
+              className={styles.mainImage}
               priority
+              unoptimized={project.mainImage.toLowerCase().endsWith('.gif')}
             />
-          </div>
+          )}
           
           {galleryImages.length > 0 && (
             <div className={styles.extraGallery}>
-              {galleryImages.map((url, i) => (
-                <Image key={i} src={url} alt={`Gallery ${i}`} width={1200} height={900} className={styles.extraImage} />
-              ))}
-            </div>
-          )}
+            {galleryImages.map((url, i) => (
+              <div key={i} className={styles.extraImageWrapper}>
+                <Image key={i} src={url} alt={`Gallery ${i}`} width={1200} height={900} className={styles.extraImage} unoptimized={url.toLowerCase().endsWith('.gif')} />
+              </div>
+            ))}
+          </div>)}
         </div>
       </div>
     </article>

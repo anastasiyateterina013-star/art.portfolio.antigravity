@@ -25,16 +25,16 @@ export default async function Gallery({ category, title }: { category: string, t
             const displayTitle = lang === "et" && project.title_et ? project.title_et : project.title;
             return (
             <Link href={`/project/${project.id}`} key={project.id} className={styles.item}>
-              <div className={styles.imageContainer}>
+              {project.mainImage && project.mainImage !== "/placeholder.jpg" && (
                 <Image 
                   src={project.mainImage} 
-                  alt={displayTitle} 
+                  alt={project.title} 
                   fill
-                  className={styles.image}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  className={styles.galleryImage}
+                  unoptimized={project.mainImage.toLowerCase().endsWith('.gif')}
                 />
-              </div>
-              <div className={styles.overlay}>
+              )}<div className={styles.overlay}>
                 <span className={styles.projectTitle}>{displayTitle}</span>
               </div>
             </Link>
