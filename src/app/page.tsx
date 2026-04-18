@@ -53,12 +53,6 @@ export default async function Home() {
                 <RichText content={restContent} />
               </div>
             )}
-              
-            <div className={styles.socials}>
-                <a href="#">Telegram</a>
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-            </div>
           </div>
 
           {profileImage && profileImage !== "/placeholder.jpg" && (
