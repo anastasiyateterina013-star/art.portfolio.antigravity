@@ -3,6 +3,27 @@
 import { prisma } from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { writeFile } from "fs/promises";
+import { join } from "path";
+import { put } from "@vercel/blob";
+
+export async function uploadImage(formData: FormData) {
+  const file: File | null = formData.get("file") as unknown as File;
+  if (!file) throw new Error("No file provided");
+
+  if (process.env.BLOB_READ_WRITE_TOKEN) {
+    const blob = await put(file.name, file, { access: "public" });
+    return blob.url;
+  }
+
+  const bytes = await file.arrayBuffer();
+  const buffer = Buffer.from(bytes);
+  const filename = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`;
+  const filePath = join(process.cwd(), "public", "uploads", filename);
+  
+  await writeFile(filePath, buffer);
+  return `/uploads/${filename}`;
+}
 
 export async function loginAction(password: string) {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "anastasiya2024";

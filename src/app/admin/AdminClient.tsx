@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createProject, updateProject, deleteProject, updatePageContent } from "../actions";
+import { createProject, updateProject, deleteProject, updatePageContent, uploadImage } from "../actions";
 import styles from "./Admin.module.css";
 import Image from "next/image";
 
@@ -62,9 +62,11 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
       if (mainFile && mainFile.size > 0) {
         const uploadData = new FormData();
         uploadData.append("file", mainFile);
-        const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-        const uploadJson = await uploadRes.json();
-        mainImage = uploadJson.url || "";
+        try {
+          mainImage = await uploadImage(uploadData);
+        } catch (e) {
+          throw new Error("Main image upload failed. The file might be larger than 50MB.");
+        }
       }
 
       if (!isEditing && !mainImage) {
@@ -79,13 +81,12 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         if (file.size > 0) {
           const uploadData = new FormData();
           uploadData.append("file", file);
-          const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-          if (!uploadRes.ok) {
-            throw new Error("One of your gallery images is too large (Over 4.5MB Vercel limit). Please compress them!");
+          try {
+            const uploadedUrl = await uploadImage(uploadData);
+            galleryUrls.push(uploadedUrl);
+          } catch (e) {
+            throw new Error("One of your gallery images failed to upload. The file might be larger than 50MB.");
           }
-          let uploadJson;
-          try { uploadJson = await uploadRes.json(); } catch { throw new Error("Gallery upload failed."); }
-          if (uploadJson.url) galleryUrls.push(uploadJson.url);
         }
       }
 
@@ -149,9 +150,11 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
       if (mainFile && mainFile.size > 0) {
         const uploadData = new FormData();
         uploadData.append("file", mainFile);
-        const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-        const uploadJson = await uploadRes.json();
-        mainImage = uploadJson.url || "";
+        try {
+          mainImage = await uploadImage(uploadData);
+        } catch (e) {
+          throw new Error("Main image upload failed. The file might be larger than 50MB.");
+        }
       }
 
       const galleryFiles = formData.getAll("galleryFiles") as File[];
@@ -160,11 +163,12 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         if (file.size > 0) {
           const uploadData = new FormData();
           uploadData.append("file", file);
-          const uploadRes = await fetch("/api/upload", { method: "POST", body: uploadData });
-          if (!uploadRes.ok) throw new Error("Gallery image over 4.5MB limit. Please compress.");
-          let uploadJson;
-          try { uploadJson = await uploadRes.json(); } catch { throw new Error("Upload failed."); }
-          if (uploadJson.url) newGalleryUrls.push(uploadJson.url);
+          try {
+            const uploadedUrl = await uploadImage(uploadData);
+            newGalleryUrls.push(uploadedUrl);
+          } catch (e) {
+            throw new Error("Gallery image upload failed. The file might be larger than 50MB.");
+          }
         }
       }
 
@@ -310,8 +314,6 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                 <option value="home_et">Home Page (ET)</option>
                 <option value="about">About Page (EN)</option>
                 <option value="about_et">About Page (ET)</option>
-                <option value="contacts">Contacts (EN)</option>
-                <option value="contacts_et">Contacts (ET)</option>
               </select>
             </div>
             <div className={styles.formGroup}>
