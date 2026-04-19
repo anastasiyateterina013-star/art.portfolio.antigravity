@@ -2,6 +2,7 @@ import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
 import RichText from "@/components/RichText";
 import Image from "next/image";
+import LightboxWrapper from "@/components/LightboxWrapper";
 
 export default async function AboutPage() {
   const cookieStore = await cookies();
@@ -39,19 +40,21 @@ export default async function AboutPage() {
             top: "120px",
             alignSelf: "flex-start",
           }}>
-            <Image
-              src={sideImage}
-              alt="About illustration"
-              width={260}
-              height={400}
-              unoptimized={sideImage.toLowerCase().endsWith('.gif')}
-              style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-                display: "block",
-              }}
-            />
+            <LightboxWrapper images={[sideImage]} index={0}>
+              <Image
+                src={sideImage}
+                alt="About illustration"
+                width={260}
+                height={400}
+                unoptimized={sideImage.toLowerCase().endsWith('.gif')}
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  objectFit: "contain",
+                  display: "block",
+                }}
+              />
+            </LightboxWrapper>
           </div>
         )}
       </div>

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import Image from "next/image";
 import { cookies } from "next/headers";
 import RichText from "@/components/RichText";
+import LightboxWrapper from "@/components/LightboxWrapper";
 
 export default async function Home() {
   const cookieStore = await cookies();
@@ -58,7 +59,9 @@ export default async function Home() {
           {profileImage && profileImage !== "/placeholder.jpg" && (
              <div className={styles.portraitColumn}>
                <div className={styles.portraitWrapper}>
-                 <Image src={profileImage} alt="Anastasiya Teterina" width={400} height={500} className={styles.portraitImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
+                 <LightboxWrapper images={[profileImage, ...galleryImages]} index={0}>
+                   <Image src={profileImage} alt="Anastasiya Teterina" width={400} height={500} className={styles.portraitImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
+                 </LightboxWrapper>
                </div>
              </div>
           )}
@@ -68,9 +71,14 @@ export default async function Home() {
 
       {galleryImages.length > 0 && (
         <div className={styles.extraGallery}>
-          {galleryImages.map((url, i) => (
-            <Image key={i} src={url} alt={`Home Gallery ${i}`} width={500} height={500} className={styles.extraImage} unoptimized={url.toLowerCase().endsWith('.gif')} />
-          ))}
+          {galleryImages.map((url, i) => {
+            const indexInArray = (profileImage && profileImage !== "/placeholder.jpg") ? i + 1 : i;
+            return (
+              <LightboxWrapper key={url} images={profileImage && profileImage !== "/placeholder.jpg" ? [profileImage, ...galleryImages] : galleryImages} index={indexInArray}>
+                <Image src={url} alt={`Home Gallery ${i}`} width={500} height={500} className={styles.extraImage} unoptimized={url.toLowerCase().endsWith('.gif')} />
+              </LightboxWrapper>
+            );
+          })}
         </div>
       )}
       

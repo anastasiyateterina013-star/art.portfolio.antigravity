@@ -1,0 +1,99 @@
+.lightboxOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: 100%;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: contain;
+}
+
+.closeBtn {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 36px;
+  cursor: pointer;
+  z-index: 10000;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+.closeBtn:hover {
+  transform: scale(1.1);
+}
+
+.navBtn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: white;
+  font-size: 60px;
+  cursor: pointer;
+  padding: 20px 10px;
+  z-index: 10000;
+  transition: background 0.3s;
+  border-radius: 8px;
+}
+
+.navBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.prevBtn {
+  left: -20px;
+}
+
+.nextBtn {
+  right: -20px;
+}
+
+.counter {
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 14px;
+  letter-spacing: 2px;
+  font-family: monospace;
+}
+
+@media (max-width: 768px) {
+  .navBtn {
+    font-size: 40px;
+    padding: 10px 5px;
+  }
+  .prevBtn { left: -10px; }
+  .nextBtn { right: -10px; }
+  .lightboxOverlay { padding: 10px; }
+  
+  .closeBtn {
+    top: 10px;
+    right: 15px;
+  }
+}

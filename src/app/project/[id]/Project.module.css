@@ -27,7 +27,7 @@
 /* Layout Configuration */
 .content {
   display: flex;
-  flex-direction: column-reverse; /* Details above images on mobile */
+  flex-direction: column; /* Details above images on mobile */
   gap: var(--spacing-xl);
   margin-top: var(--spacing-lg);
 }
@@ -104,9 +104,14 @@
 }
 
 .extraGallery {
-  column-count: 2;
-  column-width: 250px;
+  column-count: 1;
   column-gap: var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .extraGallery {
+    column-count: 2;
+  }
 }
 
 .extraImage {

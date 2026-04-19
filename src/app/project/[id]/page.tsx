@@ -6,6 +6,7 @@ import styles from "./Project.module.css";
 import { Metadata } from "next";
 import { cookies } from "next/headers";
 import RichText from "@/components/RichText";
+import InteractiveGallery from "@/components/InteractiveGallery";
 
 type Props = {
   params: Promise<{ id: string }>
@@ -71,28 +72,11 @@ export default async function ProjectPage({ params }: Props) {
           )}
         </div>
 
-        <div className={styles.mediaColumn}>
-          {project.mainImage && project.mainImage !== "/placeholder.jpg" && (
-            <Image
-              src={project.mainImage}
-              alt={project.title}
-              width={800}
-              height={600}
-              className={styles.mainImage}
-              priority
-              unoptimized={project.mainImage.toLowerCase().endsWith('.gif')}
-            />
-          )}
-          
-          {galleryImages.length > 0 && (
-            <div className={styles.extraGallery}>
-            {galleryImages.map((url, i) => (
-              <div key={i} className={styles.extraImageWrapper}>
-                <Image key={i} src={url} alt={`Gallery ${i}`} width={1200} height={900} className={styles.extraImage} unoptimized={url.toLowerCase().endsWith('.gif')} />
-              </div>
-            ))}
-          </div>)}
-        </div>
+        <InteractiveGallery
+          mainImage={project.mainImage}
+          projectTitle={project.title}
+          galleryImages={galleryImages}
+        />
       </div>
     </article>
   );
