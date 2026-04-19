@@ -36,8 +36,18 @@ export default async function Home() {
   return (
     <div className={styles.home}>
       <div className={styles.hero}>
-        <div className={styles.twoColumnGrid}>
+        <div className={styles.profileRow}>
           
+          {profileImage && profileImage !== "/placeholder.jpg" && (
+             <div className={styles.avatarColumn}>
+               <div className={styles.avatarWrapper}>
+                 <LightboxWrapper images={[profileImage, ...galleryImages]} index={0}>
+                   <Image src={profileImage} alt="Anastasiya Teterina" width={150} height={150} className={styles.avatarImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
+                 </LightboxWrapper>
+               </div>
+             </div>
+          )}
+
           <div className={styles.contentSection}>
             <h1 className={styles.name}>Anastasiya Teterina</h1>
 
@@ -55,16 +65,6 @@ export default async function Home() {
               </div>
             )}
           </div>
-
-          {profileImage && profileImage !== "/placeholder.jpg" && (
-             <div className={styles.portraitColumn}>
-               <div className={styles.portraitWrapper}>
-                 <LightboxWrapper images={[profileImage, ...galleryImages]} index={0}>
-                   <Image src={profileImage} alt="Anastasiya Teterina" width={400} height={500} className={styles.portraitImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
-                 </LightboxWrapper>
-               </div>
-             </div>
-          )}
 
         </div>
       </div>

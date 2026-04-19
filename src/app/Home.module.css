@@ -28,16 +28,16 @@
   margin-bottom: var(--spacing-lg);
 }
 
-.twoColumnGrid {
+.profileRow {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   gap: var(--spacing-xl);
 }
 
 @media (min-width: 768px) {
-  .twoColumnGrid {
+  .profileRow {
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
   }
 }
@@ -47,25 +47,23 @@
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-  max-width: 800px; /* text column max width constraints */
+  max-width: 800px;
 }
 
-.portraitColumn {
-  flex: 1;
-  max-width: 600px;
-  display: flex;
-  justify-content: flex-end;
+.avatarColumn {
+  flex-shrink: 0;
 }
 
-.portraitWrapper {
-  width: 100%;
-  border-radius: 6px;
+.avatarWrapper {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
   overflow: hidden;
 }
 
-.portraitImage {
+.avatarImage {
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   display: block;
 }
