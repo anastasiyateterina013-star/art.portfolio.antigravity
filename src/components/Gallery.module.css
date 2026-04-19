@@ -41,14 +41,9 @@
 .item {
   position: relative;
   aspect-ratio: 4 / 5;
-  background-color: var(--gray);
+  background-color: transparent;
   overflow: hidden;
   display: block;
-}
-@media (prefers-color-scheme: light) {
-  .item {
-    background-color: #f5f5f5;
-  }
 }
 
 .imageContainer {
