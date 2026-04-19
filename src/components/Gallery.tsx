@@ -31,7 +31,7 @@ export default async function Gallery({ category, title }: { category: string, t
                   alt={project.title} 
                   fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className={styles.galleryImage}
+                  className={styles.image}
                   unoptimized={project.mainImage.toLowerCase().endsWith('.gif')}
                 />
               )}<div className={styles.overlay}>
