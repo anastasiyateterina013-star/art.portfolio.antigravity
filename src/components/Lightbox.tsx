@@ -15,16 +15,15 @@ export default function Lightbox({
 }) {
   const [index, setIndex] = useState(initialIndex);
 
-  // Handle keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
-      if (e.key === "ArrowRight") nextImage();
-      if (e.key === "ArrowLeft") prevImage();
+      if (e.key === "ArrowRight") setIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+      if (e.key === "ArrowLeft") setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [index, onClose]);
+  }, [images.length, onClose]);
 
   const prevImage = () => {
     setIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));

@@ -64,7 +64,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         uploadData.append("file", mainFile);
         try {
           mainImage = await uploadImage(uploadData);
-        } catch (e) {
+        } catch {
           throw new Error("Main image upload failed. The file might be larger than 50MB.");
         }
       }
@@ -84,7 +84,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
           try {
             const uploadedUrl = await uploadImage(uploadData);
             galleryUrls.push(uploadedUrl);
-          } catch (e) {
+          } catch {
             throw new Error("One of your gallery images failed to upload. The file might be larger than 50MB.");
           }
         }
@@ -152,7 +152,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
         uploadData.append("file", mainFile);
         try {
           mainImage = await uploadImage(uploadData);
-        } catch (e) {
+        } catch {
           throw new Error("Main image upload failed. The file might be larger than 50MB.");
         }
       }
@@ -166,7 +166,7 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
           try {
             const uploadedUrl = await uploadImage(uploadData);
             newGalleryUrls.push(uploadedUrl);
-          } catch (e) {
+          } catch {
             throw new Error("Gallery image upload failed. The file might be larger than 50MB.");
           }
         }
