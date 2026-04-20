@@ -30,15 +30,14 @@
 
 .profileRow {
   display: flex;
-  flex-direction: column;
-  gap: var(--spacing-xl);
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-md);
 }
 
 @media (min-width: 768px) {
   .profileRow {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
+    gap: var(--spacing-xl);
   }
 }
 
@@ -55,10 +54,17 @@
 }
 
 .avatarWrapper {
-  width: 150px;
-  height: 150px;
-  border-radius: 8px;
+  width: 100px;
+  height: 100px;
+  border-radius: 0;
   overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .avatarWrapper {
+    width: 140px;
+    height: 140px;
+  }
 }
 
 .avatarImage {
