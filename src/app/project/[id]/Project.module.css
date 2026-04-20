@@ -103,6 +103,13 @@
   display: block;
 }
 
+.mainImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
 .extraGallery {
   column-count: 1;
   column-gap: var(--spacing-md);
@@ -118,6 +125,7 @@
   width: 100%;
   height: auto;
   display: block;
+  object-fit: contain;
   border-radius: 4px;
   margin-bottom: var(--spacing-md);
   break-inside: avoid;
