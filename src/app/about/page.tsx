@@ -23,7 +23,7 @@ export default async function AboutPage() {
   const sideImage = pageContent?.mainImage;
 
   return (
-    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "var(--spacing-xl) 0" }}>
+    <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "var(--spacing-xl) 0", backgroundImage: "url('/wallpaper.png')", backgroundAttachment: "fixed", backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat", minHeight: "100vh" }}>
       <h1 style={{ marginBottom: "var(--spacing-lg)" }}>{t.about}</h1>
 
       <div style={{ display: "flex", gap: "60px", alignItems: "flex-start" }}>
