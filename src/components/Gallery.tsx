@@ -10,7 +10,7 @@ export default async function Gallery({ category, title }: { category: string, t
 
   const projects = await prisma.project.findMany({
     where: { category },
-    orderBy: { createdAt: "desc" },
+    orderBy: { sortOrder: "asc" },
   });
 
   return (

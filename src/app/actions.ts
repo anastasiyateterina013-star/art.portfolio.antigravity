@@ -130,3 +130,35 @@ export async function updatePageContent(id: string, content: string, mainImage?:
   revalidatePath("/about");
   revalidatePath("/admin");
 }
+
+export async function reorderProject(projectId: string, direction: "up" | "down") {
+  const project = await prisma.project.findUnique({ where: { id: projectId } });
+  if (!project) return;
+
+  // Get all projects sorted by sortOrder
+  const allProjects = await prisma.project.findMany({
+    orderBy: { sortOrder: "asc" },
+  });
+
+  const currentIndex = allProjects.findIndex((p) => p.id === projectId);
+  if (currentIndex === -1) return;
+
+  const swapIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
+  if (swapIndex < 0 || swapIndex >= allProjects.length) return;
+
+  const swapProject = allProjects[swapIndex];
+
+  // Swap sortOrder values
+  await prisma.project.update({
+    where: { id: projectId },
+    data: { sortOrder: swapProject.sortOrder },
+  });
+  await prisma.project.update({
+    where: { id: swapProject.id },
+    data: { sortOrder: project.sortOrder },
+  });
+
+  revalidatePath("/design");
+  revalidatePath("/maal");
+  revalidatePath("/admin");
+}

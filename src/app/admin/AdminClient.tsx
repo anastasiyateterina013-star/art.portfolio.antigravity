@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { createProject, updateProject, deleteProject, updatePageContent, uploadImage } from "../actions";
+import { createProject, updateProject, deleteProject, updatePageContent, uploadImage, reorderProject } from "../actions";
 import styles from "./Admin.module.css";
 import Image from "next/image";
 
@@ -379,7 +379,21 @@ export default function AdminClient({ projects = [], pageContents = [] }: { proj
                   <br />
                   <small>({p.category})</small>
                 </div>
-                <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
+                <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                  <button
+                    onClick={async () => { await reorderProject(p.id, "up"); }}
+                    style={{ background: "#555", color: "white", padding: "6px 10px", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "16px" }}
+                    title="Move Up"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    onClick={async () => { await reorderProject(p.id, "down"); }}
+                    style={{ background: "#555", color: "white", padding: "6px 10px", border: "none", borderRadius: "4px", cursor: "pointer", fontSize: "16px" }}
+                    title="Move Down"
+                  >
+                    ↓
+                  </button>
                   <button
                     onClick={() => setEditingProjectId(p.id)}
                     style={{ background: "#4caf50", color: "white", padding: "6px 12px", border: "none", borderRadius: "4px", cursor: "pointer" }}

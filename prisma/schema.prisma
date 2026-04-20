@@ -23,6 +23,7 @@ model Project {
   mainImage      String
   gallery        String   @default("[]")
   category       String
+  sortOrder      Int      @default(0)
   createdAt      DateTime @default(now())
 }
 

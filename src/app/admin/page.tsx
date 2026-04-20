@@ -3,7 +3,7 @@ import AdminClient from "./AdminClient";
 
 export default async function AdminRoute() {
   const projects = await prisma.project.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { sortOrder: "asc" },
   });
 
   const pageContents = await prisma.pageContent.findMany();
