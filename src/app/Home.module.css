@@ -60,14 +60,23 @@
 }
 
 .avatarFrame {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px 60px; 
-  background-image: url('/wallpaper.png');
+}
+
+.avatarFrame::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('/wallpaper2.png');
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+  pointer-events: none;
+  z-index: 10;
 }
 
 .avatarWrapper {
