@@ -59,6 +59,17 @@
   order: 2;
 }
 
+.avatarFrame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px; 
+  background-image: url('/wallpaper.png');
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 .avatarWrapper {
   width: 100px;
   height: 100px;
@@ -67,6 +78,9 @@
 }
 
 @media (min-width: 768px) {
+  .avatarFrame {
+    padding: 60px;
+  }
   .avatarWrapper {
     width: 140px;
     height: 140px;

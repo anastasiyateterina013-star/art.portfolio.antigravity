@@ -40,10 +40,12 @@ export default async function Home() {
           
           {profileImage && profileImage !== "/placeholder.jpg" && (
              <div className={styles.avatarColumn}>
-               <div className={styles.avatarWrapper}>
-                 <LightboxWrapper images={[profileImage, ...galleryImages]} index={0}>
-                   <Image src={profileImage} alt="Anastasiya Teterina" width={150} height={150} className={styles.avatarImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
-                 </LightboxWrapper>
+               <div className={styles.avatarFrame}>
+                 <div className={styles.avatarWrapper}>
+                   <LightboxWrapper images={[profileImage, ...galleryImages]} index={0}>
+                     <Image src={profileImage} alt="Anastasiya Teterina" width={150} height={150} className={styles.avatarImage} priority unoptimized={profileImage.toLowerCase().endsWith('.gif')} />
+                   </LightboxWrapper>
+                 </div>
                </div>
              </div>
           )}
