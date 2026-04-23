@@ -63,9 +63,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px; 
+  padding: 20px 60px; 
   background-image: url('/wallpaper.png');
-  background-size: 100% 100%;
+  background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
 }
@@ -79,7 +79,7 @@
 
 @media (min-width: 768px) {
   .avatarFrame {
-    padding: 60px;
+    padding: 30px 90px;
   }
   .avatarWrapper {
     width: 140px;
