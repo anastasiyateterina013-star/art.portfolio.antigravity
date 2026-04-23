@@ -19,13 +19,15 @@
 
 .introText {
   font-family: var(--font-body), serif;
-  font-size: clamp(32px, 5vw, 64px);
+  font-size: clamp(20px, 5vw, 64px);
   line-height: 1.15;
   font-weight: 400;
   color: var(--foreground);
   max-width: 1200px;
   margin-top: var(--spacing-sm);
   margin-bottom: var(--spacing-lg);
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .profileRow {
@@ -47,10 +49,14 @@
   flex-direction: column;
   gap: var(--spacing-md);
   max-width: 800px;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .avatarColumn {
   flex-shrink: 0;
+  order: 2;
 }
 
 .avatarWrapper {
