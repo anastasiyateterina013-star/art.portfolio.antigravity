@@ -1,5 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
+
 import styles from "./Gallery.module.css";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";

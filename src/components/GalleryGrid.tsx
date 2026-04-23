@@ -4,12 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./Gallery.module.css";
+import type { Project } from "@prisma/client";
 
 export default function GalleryGrid({
   projects,
   lang,
 }: {
-  projects: any[];
+  projects: Project[];
   lang: string;
 }) {
   const [cursorPos, setCursorPos] = useState({ x: -1000, y: -1000 });
