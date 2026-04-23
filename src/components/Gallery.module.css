@@ -57,28 +57,25 @@
   transition: none;
 }
 
-.overlay {
-  position: absolute;
+.customCursor {
+  position: fixed;
+  top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  padding: 12px 16px;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.55));
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-start;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.item:hover .overlay {
-  opacity: 1;
-}
-
-.projectTitle {
-  color: white;
-  font-size: 16px;
-  font-weight: 500;
+  pointer-events: none;
+  z-index: 9999;
+  
+  /* Transparent frame */
+  background: transparent;
+  border: 1px solid var(--heading-color);
+  padding: 12px 24px;
+  
+  /* Font - Section Heading */
+  font-family: var(--font-heading), sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  color: var(--heading-color);
+  
+  white-space: nowrap;
 }

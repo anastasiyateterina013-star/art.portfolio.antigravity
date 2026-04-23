@@ -30,8 +30,10 @@ export default async function AboutPage() {
 
       <div style={{ display: "flex", gap: "60px", alignItems: "flex-start" }}>
         {/* Text column */}
-        <div style={{ flex: "1 1 0", minWidth: 0 }}>
-          <RichText content={contentText} />
+        <div style={{ flex: "1 1 0", minWidth: 0, position: "relative", zIndex: 1 }}>
+          <div className={aboutStyles.textBg}>
+            <RichText content={contentText} />
+          </div>
         </div>
 
         {/* Decorative side image — sticky so it stays beside text as you scroll */}

@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./Gallery.module.css";
 import { prisma } from "@/lib/prisma";
 import { cookies } from "next/headers";
+import GalleryGrid from "./GalleryGrid";
 
 export default async function Gallery({ category, title }: { category: string, title: string }) {
   const cookieStore = await cookies();
@@ -20,27 +21,7 @@ export default async function Gallery({ category, title }: { category: string, t
       {projects.length === 0 ? (
         <p className={styles.empty}>{lang === "et" ? "Selles kategoorias objekte ei leitud." : `No items found in ${title.toLowerCase()}.`}</p>
       ) : (
-        <div className={styles.grid}>
-          {projects.map((project) => {
-            const displayTitle = lang === "et" && project.title_et ? project.title_et : project.title;
-            return (
-            <Link href={`/project/${project.id}`} key={project.id} className={styles.item}>
-              {project.mainImage && project.mainImage !== "/placeholder.jpg" && (
-                <Image 
-                  src={project.mainImage} 
-                  alt={project.title} 
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className={styles.image}
-                  unoptimized={project.mainImage.toLowerCase().endsWith('.gif')}
-                />
-              )}<div className={styles.overlay}>
-                <span className={styles.projectTitle}>{displayTitle}</span>
-              </div>
-            </Link>
-            );
-          })}
-        </div>
+        <GalleryGrid projects={projects} lang={lang} />
       )}
     </div>
   );
