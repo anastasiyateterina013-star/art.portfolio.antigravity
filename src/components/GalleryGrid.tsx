@@ -30,9 +30,10 @@ export default function GalleryGrid({
         {projects.map((project) => {
           const displayTitle =
             lang === "et" && project.title_et ? project.title_et : project.title;
+          const slug = encodeURIComponent(displayTitle.toUpperCase().replace(/\s+/g, ""));
           return (
             <Link
-              href={`/project/${project.id}`}
+              href={`/project/${slug}`}
               key={project.id}
               className={styles.item}
               onMouseEnter={() => setHoveredProject(displayTitle)}

@@ -11,11 +11,30 @@ type Props = {
   params: Promise<{ id: string }>
 }
 
+async function getProjectByParam(paramId: string) {
+  const decoded = decodeURIComponent(paramId);
+  const searchStr = decoded.toUpperCase().replace(/\s+/g, '');
+  
+  // 1. Try to find by UUID first (in case old links are used)
+  let project = await prisma.project.findUnique({ where: { id: decoded } }).catch(() => null);
+  
+  // 2. Fallback to slug matching against English or Estonian title
+  if (!project) {
+    const allProjects = await prisma.project.findMany();
+    project = allProjects.find(p => {
+      const matchEn = p.title.toUpperCase().replace(/\s+/g, '') === searchStr;
+      const matchEt = p.title_et ? p.title_et.toUpperCase().replace(/\s+/g, '') === searchStr : false;
+      return matchEn || matchEt;
+    }) || null;
+  }
+  return project;
+}
+
 export async function generateMetadata(
   { params }: Props
 ): Promise<Metadata> {
   const resolvedParams = await params;
-  const project = await prisma.project.findUnique({ where: { id: resolvedParams.id } });
+  const project = await getProjectByParam(resolvedParams.id);
   
   if (!project) return { title: "Project Not Found" };
   return { title: `${project.title} | Anastasiya Teterina` };
@@ -23,9 +42,7 @@ export async function generateMetadata(
 
 export default async function ProjectPage({ params }: Props) {
   const resolvedParams = await params;
-  const project = await prisma.project.findUnique({
-    where: { id: resolvedParams.id },
-  });
+  const project = await getProjectByParam(resolvedParams.id);
 
   if (!project) {
     notFound();
