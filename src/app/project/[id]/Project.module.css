@@ -45,8 +45,13 @@
 .detailsColumn {
   flex: 1;
   max-width: 450px;
-  position: sticky;
-  top: 100px;
+}
+
+@media (min-width: 1024px) {
+  .detailsColumn {
+    position: sticky;
+    top: 100px;
+  }
 }
 
 .title {
