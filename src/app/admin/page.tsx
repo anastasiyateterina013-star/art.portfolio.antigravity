@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import AdminClient from "./AdminClient";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminRoute() {
   const projects = await prisma.project.findMany({
     orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],

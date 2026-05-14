@@ -5,7 +5,7 @@ import { createProject, updateProject, deleteProject, updatePageContent, uploadI
 import styles from "./Admin.module.css";
 import Image from "next/image";
 
-export default function AdminClient({ projects = [], pageContents = [] }: { projects?: { id: string; title?: string | null; title_et?: string | null; category?: string | null; description?: string | null; description_et?: string | null; content?: string | null; content_et?: string | null; mainImage?: string | null; gallery?: string | null; }[], pageContents?: { id: string; content?: string | null; mainImage?: string | null; gallery?: string | null; }[] }) {
+export default function AdminClient({ projects = [], pageContents = [] }: { projects?: { id: string; title?: string | null; title_et?: string | null; category?: string | null; description?: string | null; description_et?: string | null; content?: string | null; content_et?: string | null; mainImage?: string | null; gallery?: string | null; createdAt?: string; sortOrder?: number; }[], pageContents?: { id: string; content?: string | null; mainImage?: string | null; gallery?: string | null; updatedAt?: string; }[] }) {
   const [loading, setLoading] = useState(false);
   const [activeTab, setActiveTab] = useState("projects");
   const [editingProjectId, setEditingProjectId] = useState<string | null>(null);
