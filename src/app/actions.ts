@@ -46,6 +46,11 @@ export async function createProject(data: {
   mainImage: string;
   gallery?: string;
 }) {
+  const maxSortProject = await prisma.project.findFirst({
+    orderBy: { sortOrder: 'desc' },
+  });
+  const newSortOrder = maxSortProject ? maxSortProject.sortOrder + 1 : 0;
+
   await prisma.project.create({
     data: {
       title: data.title,
@@ -57,6 +62,7 @@ export async function createProject(data: {
       content_et: data.content_et || null,
       mainImage: data.mainImage,
       gallery: data.gallery || "[]",
+      sortOrder: newSortOrder,
     },
   });
 
@@ -135,9 +141,9 @@ export async function reorderProject(projectId: string, direction: "up" | "down"
   const project = await prisma.project.findUnique({ where: { id: projectId } });
   if (!project) return;
 
-  // Get all projects sorted by sortOrder
+  // Get all projects sorted deterministically
   const allProjects = await prisma.project.findMany({
-    orderBy: { sortOrder: "asc" },
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "asc" }],
   });
 
   const currentIndex = allProjects.findIndex((p) => p.id === projectId);
@@ -146,17 +152,20 @@ export async function reorderProject(projectId: string, direction: "up" | "down"
   const swapIndex = direction === "up" ? currentIndex - 1 : currentIndex + 1;
   if (swapIndex < 0 || swapIndex >= allProjects.length) return;
 
-  const swapProject = allProjects[swapIndex];
+  // Reorder the array
+  const newOrder = [...allProjects];
+  const [movedProject] = newOrder.splice(currentIndex, 1);
+  newOrder.splice(swapIndex, 0, movedProject);
 
-  // Swap sortOrder values
-  await prisma.project.update({
-    where: { id: projectId },
-    data: { sortOrder: swapProject.sortOrder },
+  // Update all projects with their new sequential sortOrder to fix any duplicates
+  const updatePromises = newOrder.map((p, index) => {
+    return prisma.project.update({
+      where: { id: p.id },
+      data: { sortOrder: index },
+    });
   });
-  await prisma.project.update({
-    where: { id: swapProject.id },
-    data: { sortOrder: project.sortOrder },
-  });
+
+  await prisma.$transaction(updatePromises);
 
   revalidatePath("/design");
   revalidatePath("/maal");
